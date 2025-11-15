@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líneas Subterráneas de Alta Tensión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .ventajas { background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%); }
+        .desventajas { background: linear-gradient(135deg, #d31027 0%, #ea384d 100%); }
+        .normativa { background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); }
+        .sistemas { background: linear-gradient(135deg, #614385 0%, #516395 100%); }
+        .elementos { background: linear-gradient(135deg, #ff512f 0%, #f09819 100%); }
+        .cable { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #2a5298;
+        }
+        
+        .system-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .system-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: #3498db;
+        }
+        
+        .system-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .system-title::before {
+            content: '📁';
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .system-detail {
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .system-detail h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .system-detail p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .element-list {
+            list-style-type: none;
+        }
+        
+        .element-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        
+        .element-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .element-icon {
+            margin-right: 8px;
+            color: #2a5298;
+            font-size: 1rem;
+            margin-top: 2px;
+            min-width: 20px;
+        }
+        
+        .regulation-item {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #1d976c;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .element-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .cable-structure {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .cable-layers {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 10px 0;
+        }
+        
+        .cable-layer {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+        
+        .conductor { 
+            width: 60px; 
+            height: 60px; 
+            background: #e74c3c; 
+            top: 70px; 
+            left: 70px; 
+            z-index: 6;
+        }
+        
+        .semiconductor { 
+            width: 90px; 
+            height: 90px; 
+            background: #e67e22; 
+            top: 55px; 
+            left: 55px; 
+            z-index: 5;
+        }
+        
+        .aislante { 
+            width: 120px; 
+            height: 120px; 
+            background: #3498db; 
+            top: 40px; 
+            left: 40px; 
+            z-index: 4;
+        }
+        
+        .pantalla { 
+            width: 150px; 
+            height: 150px; 
+            background: #9b59b6; 
+            top: 25px; 
+            left: 25px; 
+            z-index: 3;
+        }
+        
+        .armadura { 
+            width: 180px; 
+            height: 180px; 
+            background: #34495e; 
+            top: 10px; 
+            left: 10px; 
+            z-index: 2;
+        }
+        
+        .cubierta { 
+            width: 200px; 
+            height: 200px; 
+            background: #2c3e50; 
+            top: 0; 
+            left: 0; 
+            z-index: 1;
+        }
+        
+        .cable-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        /* Estilos del Índice Desplegable */
+.indice-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 14px;
+}
+
+.indice-header {
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indice-header:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+}
+
+.indice-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.indice-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.indice-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.indice-links li {
+    border-bottom: 1px solid #eee;
+}
+
+.indice-links li:last-child {
+    border-bottom: none;
+}
+
+.indice-links a {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.indice-links a:hover {
+    background: #f8f9fa;
+    color: #1e3c72;
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+.indice-container.active .indice-content {
+    max-height: 800px;
+}
+
+.indice-container.active .toggle-icon {
+    transform: rotate(180deg);
+}  
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .system-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cable-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Índice Desplegable -->
+<div class="indice-container">
+    <div class="indice-header" id="indiceToggle">
+        <h2>📚 Índice de Contenidos</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="indice-content">
+        <ul class="indice-links">
+            <li><a href="Esquema sistema eléctrico.html">Esquema general</a></li>
+            <li><a href="Centrales Generadoras y Alternadores.html">Centrales Generadoras y Alternadores</a></li>
+            <li><a href="Estaciones y Red.html">Estaciones y Red</a></li>
+            <li><a href="Red de Distribución.html">Red de Distribución</a></li>
+            <li><a href="Líneas AT-Aéreas.html">Líneas AT-Aéreas</a></li>
+            <li><a href="Líneas subterráneas.html">Líneas subterráneas</a></li>
+            <li><a href="Cruzamientos y Aparamenta.html">Cruzamientos y Aparamenta</a></li>
+            <li><a href="Centro Transformador (2).html">Centro Transformador</a></li>
+            <li><a href="BT1.html">Redes Baja Tensión</a></li>
+            <li><a href="Alumbrado.html">💡 Alumbrado Público</a></li>
+            <li><a href="Instalaciones Edificios.html">Instalaciones Edificios</a></li>
+            <li><a href="Instalaciones Enlace.html">Instalaciones de Enlace</a></li>
+            <li><a href="Instalaciones Fotovoltaicas.html">Instalaciones Fotovoltaicas</a></li>
+            <!-- Añade más enlaces según necesites -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const indiceToggle = document.getElementById('indiceToggle');
+        const indiceContainer = document.querySelector('.indice-container');
+        
+        indiceToggle.addEventListener('click', function() {
+            indiceContainer.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!indiceContainer.contains(event.target)) {
+                indiceContainer.classList.remove('active');
+            }
+        });
+    });
+</script>
+    <div class="container">
+        <header>
+            <h1>Líneas Subterráneas de Alta Tensión</h1>
+            <p class="subtitle">Información completa sobre instalaciones eléctricas subterráneas de AT</p>
+        </header>
+        
+        <div class="grid-container">
+            <!-- Ventajas -->
+            <div class="card">
+                <div class="card-header ventajas">Ventajas</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div>
+                            <strong>Mayor seguridad</strong><br>
+                            Protección frente a contactos directos por personas y animales
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👁️</div>
+                        <div>
+                            <strong>Menor impacto visual</strong><br>
+                            No alteran el paisaje urbano o natural
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔇</div>
+                        <div>
+                            <strong>Reducción de ruido</strong><br>
+                            Eliminan los ruidos típicos de las líneas aéreas (efecto corona)
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌧️</div>
+                        <div>
+                            <strong>Protección climática</strong><br>
+                            Inmunes a condiciones meteorológicas adversas
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desventajas -->
+            <div class="card">
+                <div class="card-header desventajas">Desventajas</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">📏</div>
+                        <div>
+                            <strong>Limitación de distancia</strong><br>
+                            Poca eficiencia en redes de grandes distancias
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💸</div>
+                        <div>
+                            <strong>Mayor costo</strong><br>
+                            Construcción más costosa por excavaciones necesarias
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔥</div>
+                        <div>
+                            <strong>Problemas de refrigeración</strong><br>
+                            Dificultad para disipar el calor generado por efecto Joule
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Mantenimiento complejo</strong><br>
+                            Acceso más dificultoso para reparaciones e inspecciones
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Pérdidas de carga</strong><br>
+                            Mayor absorción de potencia reactiva en largas distancias
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Normativa -->
+            <div class="card">
+                <div class="card-header normativa">Normativa Aplicable</div>
+                <div class="card-content">
+                    <div class="regulation-item">
+                        <strong>ITC-LAT 06</strong><br>
+                        Instrucción Técnica Complementaria para líneas subterráneas de AT
+                    </div>
+                    <div class="regulation-item">
+                        <strong>Ámbito de aplicación</strong><br>
+                        Todas las líneas eléctricas subterráneas y cualquier tipo de instalación distinta de las líneas aéreas
+                    </div>
+                    <div class="regulation-item">
+                        <strong>Ubicación preferente</strong><br>
+                        Terrenos de dominio público en suelo urbano, bajo aceras, con trazado rectilíneo y paralelo a fachadas
+                    </div>
+                    <div class="regulation-item">
+                        <strong>Conductores</strong><br>
+                        Siempre aislados de cobre o aluminio
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cable Subterráneo -->
+            <div class="card">
+                <div class="card-header cable">Cable Subterráneo de AT</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔴</div>
+                        <div>
+                            <strong>Identificación por color</strong><br>
+                            Rojo (actual) o negro (antiguos en servicio)
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <div>
+                            <strong>Cable unipolar</strong><br>
+                            "Hilo de línea" - un único conductor por cable
+                        </div>
+                    </div>
+                    
+                    <div class="cable-structure">
+                        <h4>Estructura del cable subterráneo de AT</h4>
+                        <div class="cable-layers">
+                            <div class="cable-layer cubierta">Cubierta</div>
+                            <div class="cable-layer armadura">Armadura</div>
+                            <div class="cable-layer pantalla">Pantalla</div>
+                            <div class="cable-layer aislante">Aislante</div>
+                            <div class="cable-layer semiconductor">Semiconductor</div>
+                            <div class="cable-layer conductor">Conductor</div>
+                        </div>
+                        
+                        <div class="cable-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #e74c3c;"></div>
+                                <span>Conductor (Cobre/Aluminio)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #e67e22;"></div>
+                                <span>Capas semiconductoras</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #3498db;"></div>
+                                <span>Aislante (XLPE/EPR)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #9b59b6;"></div>
+                                <span>Pantalla metálica</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #34495e;"></div>
+                                <span>Armadura (protección mecánica)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #2c3e50;"></div>
+                                <span>Cubierta exterior (PVC/Polietileno)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Elementos y Seguridad -->
+            <div class="card">
+                <div class="card-header elementos">Elementos y Seguridad</div>
+                <div class="card-content">
+                    <ul class="element-list">
+                        <li>
+                            <span class="element-icon">📏</span>
+                            <div>
+                                <strong>Niveles de enterramiento</strong>
+                                <div class="element-details">
+                                    AT (más profundo) → BT → Telecomunicaciones (superficial)
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🎗️</span>
+                            <div>
+                                <strong>Cinta de señalización</strong>
+                                <div class="element-details">
+                                    Polietileno a 20 cm de profundidad para identificar canalizaciones
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🛡️</span>
+                            <div>
+                                <strong>Protección mecánica</strong>
+                                <div class="element-details">
+                                    Hormigón, arena compactada y tubos corrugados
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🚧</span>
+                            <div>
+                                <strong>Tubos HDP flexibles</strong>
+                                <div class="element-details">
+                                    Corrugados (tráqueas) para protección del cableado
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🏗️</span>
+                            <div>
+                                <strong>Separación de servicios</strong>
+                                <div class="element-details">
+                                    AT, BT y telecomunicaciones en distintos niveles
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🚫</span>
+                            <div>
+                                <strong>Restricciones</strong>
+                                <div class="element-details">
+                                    No se admiten canalizaciones de gas en galerías
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Sistemas de Instalación -->
+            <div class="card full-width">
+                <div class="card-header sistemas">Sistemas de Instalación</div>
+                <div class="card-content">
+                    <div class="system-item">
+                        <div class="system-title">Directamente Enterrados</div>
+                        <div class="system-grid">
+                            <div class="system-detail">
+                                <h4>📐 Configuración</h4>
+                                <p>Cables enterrados directamente en el terreno a distintos niveles</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>📊 Niveles de profundidad</h4>
+                                <p><span class="highlight">Más profundo:</span> AT<br>
+                                   <span class="highlight">Intermedio:</span> BT<br>
+                                   <span class="highlight">Superficial:</span> Telecomunicaciones</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>🎗️ Señalización</h4>
+                                <p>Cinta de polietileno a 20 cm de profundidad para prevenir daños</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="system-item">
+                        <div class="system-title">Entubados en Canalizaciones</div>
+                        <div class="system-grid">
+                            <div class="system-detail">
+                                <h4>🚇 Configuración</h4>
+                                <p>Cables instalados dentro de tubos protectores (HDP flexible corrugado)</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>🔌 Organización</h4>
+                                <p>Un circuito por tubo. Tubos de AT, BT y telecomunicaciones a distintos niveles</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>🛡️ Protección</h4>
+                                <p>Protección mecánica adicional contra daños externos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="system-item">
+                        <div class="system-title">Galerías de Servicio</div>
+                        <div class="system-grid">
+                            <div class="system-detail">
+                                <h4>🏛️ Características</h4>
+                                <p>Galerías visitables con dimensiones para circulación de personas</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>📦 Organización</h4>
+                                <p>Agrupación por tensiones: AT en un lateral, BT en otro</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>💧 Servicios adicionales</h4>
+                                <p>Canalizaciones de agua en nivel inferior al resto de instalaciones</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="system-item">
+                        <div class="system-title">Galerías No Registrables</div>
+                        <div class="system-grid">
+                            <div class="system-detail">
+                                <h4>🔧 Accesibilidad</h4>
+                                <p>Galerías no previstas para circulación de personal con tapa de registro pesada que requiere maquinaria para manipulación</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>✅ Servicios admitidos</h4>
+                                <p>Cables de AT, BT, alumbrado, control y comunicación</p>
+                            </div>
+                             <div class="system-detail">
+                                <h4>🚫 Restricciones</h4>
+                                <p>No admiten canalizaciones de gas. Agua solo si no afecta otros servicios (Zanjas)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="system-item">
+                        <div class="system-title">Atarjeas o Zanjas Registrables</div>
+                        <div class="system-grid">
+                            <div class="system-detail">
+                                <h4>🔧 Accesibilidad</h4>
+                                <p>Galerías con dimensiones reducidas y tapas manipulables sin maquinaria</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>✅ Servicios admitidos</h4>
+                                <p>Cables de AT, BT, alumbrado, control y comunicación</p>
+                            </div>
+                            <div class="system-detail">
+                                <h4>🚫 Restricciones</h4>
+                                <p>No admiten canalizaciones de gas. Agua solo si no afecta otros servicios (Zanjas)</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Manual de Bomberos del Ayuntamiento de Madrid - Infraestructuras Eléctricas</p>
+            <p>Basado en el documento "19. Instalaciones Eléctricas-13.pdf"</p>
+        </div>
+    </div>
+</body>
+</html>

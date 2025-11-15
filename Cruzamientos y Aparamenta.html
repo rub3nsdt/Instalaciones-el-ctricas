@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cruzamientos y Aparamenta Eléctrica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-rec {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 70%;
+            margin: 0 auto;
+            
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content-rec {
+            width: 50%;
+            padding: 20px;
+        }
+        .imagen {
+            flex: 0 0 auto;
+            max-width: 300px;
+        }
+        
+        .imagen img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .cruzamientos { background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%); }
+        .aparamenta { background: linear-gradient(135deg, #ff512f 0%, #f09819 100%); }
+        .interruptor { background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); }
+        .fusible { background: linear-gradient(135deg, #614385 0%, #516395 100%); }
+        .disyuntor { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .seccionador { background: linear-gradient(135deg, #d31027 0%, #ea384d 100%); }
+        .reconectador { background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%); }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #2a5298;
+        }
+        
+        .element-list {
+            list-style-type: none;
+        }
+        
+        .element-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .element-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .element-icon {
+            margin-right: 10px;
+            color: #2a5298;
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .element-details {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .distance-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #1d976c;
+        }
+        
+        .distance-value {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #1e3c72;
+            margin-right: 15px;
+            min-width: 70px;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #2a5298;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        
+        .step p {
+            font-size: 0.85rem;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 15px;
+            }
+        }
+
+        .card-rec {
+            display: block; /* Mantén esto como block para el título */
+        }
+
+        .contenido-rec {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card-content-rec {
+            flex: 1;
+            width: auto;
+            padding: 0;
+        }
+
+        .card-rec .imagen {
+            flex: 0 0 auto;
+            max-width: 500px;
+            margin-top: 4%;
+        
+        }
+
+        /* Estilos del Índice Desplegable */
+.indice-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 1600px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 14px;
+}
+
+.indice-header {
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indice-header:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+}
+
+.indice-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.indice-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.indice-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.indice-links li {
+    border-bottom: 1px solid #eee;
+}
+
+.indice-links li:last-child {
+    border-bottom: none;
+}
+
+.indice-links a {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.indice-links a:hover {
+    background: #f8f9fa;
+    color: #1e3c72;
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+.indice-container.active .indice-content {
+    max-height: 800px;
+}
+
+.indice-container.active .toggle-icon {
+    transform: rotate(180deg);
+}  
+
+        @media (max-width: 768px) {
+            .contenido-rec {
+                flex-direction: column;
+            }
+            
+            .card-rec .imagen {
+                max-width: 100%;
+                align-self: center;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+        <!-- Índice Desplegable -->
+<div class="indice-container">
+    <div class="indice-header" id="indiceToggle">
+        <h2>📚 Índice de Contenidos</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="indice-content">
+        <ul class="indice-links">
+            <li><a href="Esquema sistema eléctrico.html">Esquema general</a></li>
+            <li><a href="Centrales Generadoras y Alternadores.html">Centrales Generadoras y Alternadores</a></li>
+            <li><a href="Estaciones y Red.html">Estaciones y Red</a></li>
+            <li><a href="Red de Distribución.html">Red de Distribución</a></li>
+            <li><a href="Líneas AT-Aéreas.html">Líneas AT-Aéreas</a></li>
+            <li><a href="Líneas subterráneas.html">Líneas subterráneas</a></li>
+            <li><a href="Cruzamientos y Aparamenta.html">Cruzamientos y Aparamenta</a></li>
+            <li><a href="Centro Transformador (2).html">Centro Transformador</a></li>
+            <li><a href="BT1.html">Redes Baja Tensión</a></li>
+            <li><a href="Alumbrado.html">💡 Alumbrado Público</a></li>
+            <li><a href="Instalaciones Edificios.html">Instalaciones Edificios</a></li>
+            <li><a href="Instalaciones Enlace.html">Instalaciones de Enlace</a></li>
+            <li><a href="Instalaciones Fotovoltaicas.html">Instalaciones Fotovoltaicas</a></li>
+            <!-- Añade más enlaces según necesites -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const indiceToggle = document.getElementById('indiceToggle');
+        const indiceContainer = document.querySelector('.indice-container');
+        
+        indiceToggle.addEventListener('click', function() {
+            indiceContainer.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!indiceContainer.contains(event.target)) {
+                indiceContainer.classList.remove('active');
+            }
+        });
+    });
+</script>
+    <div class="container">
+        <header>
+            <h1>Cruzamientos y Aparamenta Eléctrica</h1>
+            <p class="subtitle">Información sobre distancias de seguridad y equipos eléctricos de protección</p>
+        </header>
+        
+        <div class="grid-container">
+            <!-- Cruzamientos -->
+            <div class="card">
+                <div class="card-header cruzamientos">Cruzamientos Subterráneos</div>
+                <div class="card-content">
+                    <div class="distance-item">
+                        <div class="distance-value">0.25 m</div>
+                        <div>
+                            <strong>AT con BT</strong><br>
+                            Distancia mínima entre cables de AT y otros cables de energía eléctrica
+                        </div>
+                    </div>
+                    <div class="distance-item">
+                        <div class="distance-value">0.20 m</div>
+                        <div>
+                            <strong>AT con Telecomunicaciones</strong><br>
+                            Separación mínima entre cables de energía y telecomunicación
+                        </div>
+                    </div>
+                    <div class="distance-item">
+                        <div class="distance-value">0.20 m</div>
+                        <div>
+                            <strong>AT con Agua/Gas</strong><br>
+                            Distancia mínima entre línea eléctrica y canalizaciones de agua o gas
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📏</div>
+                        <div>
+                            <strong>Principio general</strong><br>
+                            Las líneas de AT discurrirán por debajo de las de BT y por encima de las de agua y gas siempre que sea posible
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aparamenta Eléctrica -->
+            <div class="card">
+                <div class="card-header aparamenta">Aparamenta Eléctrica</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Definición (REBT)</strong><br>
+                            Equipo, apuesto o material para conectar a un circuito eléctrico
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div>
+                            <strong>Funciones principales</strong><br>
+                            Protección, control, seccionamiento o conexión
+                        </div>
+                    </div>
+                    
+                    <ul class="element-list">
+                        <li>
+                            <span class="element-icon">🏗️</span>
+                            <div>
+                                <strong>Pórtico</strong>
+                                <div class="element-details">
+                                    Elemento de soporte estructural para líneas de AT
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">⚡</span>
+                            <div>
+                                <strong>Barras o Embarrado</strong>
+                                <div class="element-details">
+                                    Conduce la electricidad desde la entrada hasta las diferentes zonas
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🔌</span>
+                            <div>
+                                <strong>Transformadores de tensión</strong>
+                                <div class="element-details">
+                                    Transforman la tensión a valores admisibles por los voltímetros
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">🔁</span>
+                            <div>
+                                <strong>Seccionadores</strong>
+                                <div class="element-details">
+                                    Apertura y cierre del circuito en vacío
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">⏹️</span>
+                            <div>
+                                <strong>Interruptor</strong>
+                                <div class="element-details">
+                                    Apertura y cierre del circuito en carga
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="element-icon">📊</span>
+                            <div>
+                                <strong>Transformador de intensidad</strong>
+                                <div class="element-details">
+                                    Medición de intensidad y protección, dispuestos en serie
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Interruptor de Potencia -->
+            <div class="card">
+                <div class="card-header interruptor">Interruptor de Potencia (SF6)</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Establecer, soportar e interrumpir corrientes en condiciones normales y anormales
+                        </div>
+                    </div>
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <p><strong>Cámara de fusión</strong> y <strong>cámara del mecanismo</strong></p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <p>Separación de contactos y <strong>arco eléctrico</strong></p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <p><strong>SF6</strong> se gasifica y conduce</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <p>Presión desplaza iones y <strong>enfría el arco</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚠️</div>
+                        <div>
+                            <strong>Importante para bomberos</strong><br>
+                            Elemento sobre el que actuar para abrir un circuito eléctrico con carga
+                        </div>
+                    </div>
+                </div>
+                <img src="images/interruptor pot.png" alt="interruptor"
+                style="width: 60%; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                
+            </div>
+            
+            <!-- Fusible -->
+            <div class="card">
+                <div class="card-header fusible">Fusible</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Proteger de sobrecargas y cortocircuitos
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔥</div>
+                        <div>
+                            <strong>Funcionamiento</strong><br>
+                            Se funde cuando la intensidad supera un valor límite durante un tiempo determinado
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📈</div>
+                        <div>
+                            <strong>Ejemplo</strong><br>
+                            Fusible de 200 A funde a 300 A (1.5 veces la intensidad nominal)
+                        </div>
+                    </div>
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <p>Elemento fusible en el circuito</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <p>Corriente alcanza niveles peligrosos</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <p>Fusible se funde</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <p>Interrumpe la circulación de corriente</p>
+                        </div>
+                    </div>
+                </div>
+                <img src="images/fusible.png" alt="fusible"
+                style="width: 40%; display: block; margin: 20px auto;margin-top: 0; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            </div>
+            
+            <!-- Disyuntor/Reconectador -->
+            <div class="card">
+                <div class="card-header disyuntor">Disyuntor / Reconectador</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <div>
+                            <strong>Características</strong><br>
+                            Interruptor automático telemaniado con relés de protección y reengarche
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Detectar faltas aguas abajo y reconectar automáticamente
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⏱️</div>
+                        <div>
+                            <strong>Ciclo de reengarches</strong><br>
+                            3 reengarches automáticos en marco de 3 minutos
+                        </div>
+                    </div>
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <p>Detecta falla y dispara</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <p>Activa ciclos de reengarche</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <p>Elimina faltas transitorias</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <p>Puede efectuar cortes si persiste la falla</p>
+                        </div>
+                    </div>
+                </div>
+                <img src="images/disyuntor.png" alt="dis"
+                style="width: 60%; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            </div>
+            
+            <!-- Seccionador de Cuclillas -->
+            <div class="card">
+                <div class="card-header seccionador">Seccionador de Cuchillas y Fusible</div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Apertura y cierre del circuito en vacío (sin carga)
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">👁️</div>
+                        <div>
+                            <strong>Ventaja</strong><br>
+                            Aísla tramos del circuito de manera visible para trabajar con seguridad
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚠️</div>
+                        <div>
+                            <strong>Precaución para bomberos</strong><br>
+                            Nunca manipular bajo tensión si no se conoce la carga del circuito
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Limitación</strong><br>
+                            Solo puede abrir circuitos sin consumo que genere intensidad
+                        </div>
+                    </div>
+                </div>
+                <img src="images/seccionador.png" alt="seccionador"
+                style="width: 80%; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            </div>
+            
+        </div>
+                    <!-- Reconectador de Vacío -->
+  <div class="card-rec">
+    <div class="card-header reconectador">Reconectador de Vacío</div>
+    <div class="contenido-rec">
+        <div class="card-content-rec">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏗️</div>
+                        <div>
+                            <strong>Unidad de interruptor</strong><br>
+                            Parte primaria que se instala en la parte superior del poste
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🧠</div>
+                        <div>
+                            <strong>Controlador</strong><br>
+                            Alma del reconectador situado en armario a pie del poste
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Apertura y cierre automático en caso de falla transitoria
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div>
+                            <strong>Bloqueo mecánico</strong><br>
+                            Al tirar de la anilla, se abre y queda bloqueado eléctrica y mecánicamente
+                        </div>
+                    </div>
+                </div>
+                <div class="imagen">
+                    <img src="images/reconectador.png" alt="reconectador"
+                    >
+                </div>
+            </div>
+            </div>
+        
+        <div class="footer">
+            <p>Manual de Bomberos del Ayuntamiento de Madrid - Infraestructuras Eléctricas</p>
+            <p>Basado en el documento "19. Instalaciones Eléctricas-14-18.pdf"</p>
+        </div>
+    </div>
+</body>
+</html>
