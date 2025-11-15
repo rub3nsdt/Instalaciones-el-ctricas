@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes Eléctricas de Baja Tensión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "⚡";
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+       
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .numero-resaltado {
+            background-color: #ecedee;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #d35400;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .alinear {
+           grid-column: 1 / -1;
+           display: flex;
+           gap: 20px;
+           justify-content: center;
+           
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            width: 100%;
+        }
+
+        .card-2 {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            width: 35%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .normativa { background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%); }
+        .tensiones { background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); }
+        .conductor-neutro { background: linear-gradient(135deg, #614385 0%, #516395 100%); }
+        .lineas-aereas { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .separacion { background: linear-gradient(135deg, #d31027 0%, #ea384d 100%); }
+        .redes-subterraneas { background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%); }
+        .cruzamientos { background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%); }
+        .proximidades { background: linear-gradient(135deg, #f46b45 0%, #eea849 100%); }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: #e9ecef;
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #2a5298;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .element-list {
+            list-style-type: none;
+        }
+        
+        .element-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            transition: background 0.3s ease;
+        }
+        
+        .element-list li:hover {
+            background: #f8f9fa;
+        }
+        
+        .element-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .element-icon {
+            margin-right: 10px;
+            color: #2a5298;
+            font-size: 1.1rem;
+            margin-top: 3px;
+            min-width: 25px;
+            text-align: center;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: "🏢";
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .element-details {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: #ffeaa7;
+            border-left: 4px solid #fdcb6e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .warning-box::before {
+            content: "⚠️";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+        
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .type-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .type-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+        }
+        
+        .type-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .type-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #2a5298;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .card-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            border-color: transparent rgba(255,255,255,0.3) transparent transparent;
+        }
+
+        /*Estilos de BT2*/
+
+        .normativa { background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%); }
+        .tensiones { background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); }
+        .conductor-neutro { background: linear-gradient(135deg, #614385 0%, #516395 100%); }
+        .lineas-aereas { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .separacion { background: linear-gradient(135deg, #d31027 0%, #ea384d 100%); }
+        .redes-subterraneas { background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%); }
+        .cruzamientos { background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%); }
+        .proximidades { background: linear-gradient(135deg, #f46b45 0%, #eea849 100%); }
+        .identificacion { background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%); }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            margin-top: 18px;
+        }
+        
+        .feature-item:hover {
+            background: #e9ecef;
+            border-left-color: #2a5298;
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            margin-right: 12px;
+            font-size: 1.4rem;
+            color: #2a5298;
+            min-width: 35px;
+            text-align: center;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .element-list {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+        
+        .element-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            transition: background 0.3s ease;
+        }
+        
+        .element-list li:hover {
+            background: #f8f9fa;
+        }
+        
+        .element-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .element-icon {
+            margin-right: 12px;
+            color: #2a5298;
+            font-size: 1.2rem;
+            margin-top: 3px;
+            min-width: 30px;
+            text-align: center;
+            background: rgba(42, 82, 152, 0.1);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .footer::before {
+            content: "🏢";
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .element-details {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 2px 0;
+        }
+        
+        .warning-box {
+            background: #ffeaa7;
+            border-left: 5px solid #fdcb6e;
+            padding: 18px;
+            margin: 18px 0;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .warning-box::before {
+            content: "⚠️";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+        }
+        
+        .type-grid-Fase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+        
+        .type-item {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .type-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+        }
+        
+        .type-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .type-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 18px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            min-width: 600px;
+        }
+        
+        th, td {
+            padding: 15px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #2a5298;
+            color: white;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .card-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 50px 50px 0;
+            border-color: transparent rgba(255,255,255,0.3) transparent transparent;
+            z-index: 1;
+        }
+        
+        .visual-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .badge-moderno {
+            background: #1dd1a1;
+            color: white;
+        }
+        
+        .badge-antiguo {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .color-sample {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+        }
+        
+        .color-black { background-color: #000; }
+        .color-brown { background-color: #8B4513; }
+        .color-gray { background-color: #808080; }
+        .color-blue { background-color: #1e3c72; }
+        .color-red { background-color: #d31027; }
+        
+        .configuration-diagram {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .diagram {
+            display: inline-block;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .conductor {
+            display: inline-block;
+            width: 60px;
+            height: 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+        
+        .conductor-phase { background: #d31027; }
+        .conductor-neutral { background: #1e3c72; }
+        
+        .config-at {
+            margin-bottom: 30px;
+        }
+        
+        .config-bt {
+            margin-top: 30px;
+        }
+        
+        .config-label {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-header {
+                font-size: 1.2rem;
+                padding: 15px 20px;
+            }
+            
+            .feature-item {
+                padding: 12px;
+            }
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a5298;
+            color: #2a5298;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pulse-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Estilos del Índice Desplegable */
+.indice-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 1600px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 14px;
+}
+
+.indice-header {
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indice-header:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+}
+
+.indice-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.indice-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.indice-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.indice-links li {
+    border-bottom: 1px solid #eee;
+}
+
+.indice-links li:last-child {
+    border-bottom: none;
+}
+
+.indice-links a {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.indice-links a:hover {
+    background: #f8f9fa;
+    color: #1e3c72;
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+.indice-container.active .indice-content {
+    max-height: 800px;
+}
+
+.indice-container.active .toggle-icon {
+    transform: rotate(180deg);
+}  
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Índice Desplegable -->
+<div class="indice-container">
+    <div class="indice-header" id="indiceToggle">
+        <h2>📚 Índice de Contenidos</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="indice-content">
+        <ul class="indice-links">
+            <li><a href="Esquema sistema eléctrico.html">Esquema general</a></li>
+            <li><a href="Centrales Generadoras y Alternadores.html">Centrales Generadoras y Alternadores</a></li>
+            <li><a href="Estaciones y Red.html">Estaciones y Red</a></li>
+            <li><a href="Red de Distribución.html">Red de Distribución</a></li>
+            <li><a href="Líneas AT-Aéreas.html">Líneas AT-Aéreas</a></li>
+            <li><a href="Líneas subterráneas.html">Líneas subterráneas</a></li>
+            <li><a href="Cruzamientos y Aparamenta.html">Cruzamientos y Aparamenta</a></li>
+            <li><a href="Centro Transformador (2).html">Centro Transformador</a></li>
+            <li><a href="BT1.html">Redes Baja Tensión</a></li>
+            <li><a href="Alumbrado.html">💡 Alumbrado Público</a></li>
+            <li><a href="Instalaciones Edificios.html">Instalaciones Edificios</a></li>
+            <li><a href="Instalaciones Enlace.html">Instalaciones de Enlace</a></li>
+            <li><a href="Instalaciones Fotovoltaicas.html">Instalaciones Fotovoltaicas</a></li>
+            <!-- Añade más enlaces según necesites -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const indiceToggle = document.getElementById('indiceToggle');
+        const indiceContainer = document.querySelector('.indice-container');
+        
+        indiceToggle.addEventListener('click', function() {
+            indiceContainer.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!indiceContainer.contains(event.target)) {
+                indiceContainer.classList.remove('active');
+            }
+        });
+    });
+</script>
+    <div class="container">
+        <header>
+            <h1>Redes Eléctricas de Baja Tensión</h1>
+            <p class="subtitle">Información completa sobre instalaciones eléctricas de BT</p>
+        </header>
+        
+        <div class="grid-container">
+            <!-- Normativa y Definición -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header normativa">
+                    <span>📋</span> Normativa y Definición de BT
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚖️</div>
+                        <div>
+                            <strong>Normativa</strong><br>
+                            Real Decreto 842/2002, de 2 de agosto - Reglamento Electrotécnico para Baja Tensión (REBT) y sus Instrucciones Técnicas Complementarias (ITC-BT 01 a 53)
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div>
+                            <strong>Objetivos del REBT</strong><br>
+                            - Preservar la seguridad de personas y bienes<br>
+                            - Asegurar el funcionamiento normal de las instalaciones<br>
+                            - Prevenir perturbaciones en otras instalaciones y servicios<br>
+                            - Contribuir a la fiabilidad técnica y eficiencia económica
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <div>
+                            <strong>Definición de BT</strong><br>
+                            Instalaciones eléctricas con los siguientes límites de tensión nominal:
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Tipo de Corriente</th>
+                                <th>Límite de Tensión Nominal</th>
+                            </tr>
+                            <tr>
+                                <td>Corriente Alterna</td>
+                                <td>Igual o inferior a 1.000 V (1 kV)</td>
+                            </tr>
+                            <tr>
+                                <td>Corriente Continua</td>
+                                <td>Igual o inferior a 1.500 V (1,5 kV)</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-content">
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>CORRIENTE ALTERNA (valor eficaz)</th>
+                                <th>CORRIENTE CONTINUA (valor aritmético)</th>
+                            </tr>
+                            <tr>
+                                <td><strong>MUY BAJA TENSIÓN</strong></td>
+                                <td>Un ≤ 50 V</td>
+                                <td>Un ≤ 75 V</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TENSIÓN USUAL</strong></td>
+                                <td>50 < Un ≤ 500 V</td>
+                                <td>75 < Un ≤ 750 V</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TENSIÓN ESPECIAL</strong></td>
+                                <td>500 < Un ≤ 1000 V</td>
+                                <td>750 < Un ≤ 1500 V</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="element-details" style="text-align: center; margin-top: 10px;">
+                        <em>Un = tensión nominal (V)</em>
+                    </div>
+                </div>
+                </div>
+                
+            </div>
+            
+            
+            
+        <!-- Conductor Neutro -->
+        <div class="card full-width">
+            <div class="card-corner"></div>
+            <div class="card-header conductor-neutro">
+                <span>🔌</span> Conductor Neutro
+            </div>
+            <div class="card-content">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div>
+                        <strong>Definición</strong><br>
+                        Conductor con potencial <span class="numero-resaltado">0</span> que sirve para crear un desequilibrio o diferencia de potencial que permite la existencia de corriente eléctrica. Nace en los CT del punto común de la base en estrella.
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>IMPORTANTE</strong><br>
+                    El REBT considera el neutro como conductor activo susceptible de generar riesgo eléctrico. <span class="highlight">NUNCA</span> debe ser interrumpido en las redes de distribución ni en el interior de las instalaciones receptoras, salvo que la interrupción se realice con dispositivos específicos.
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">⚠️</div>
+                    <div>
+                        <strong>Consecuencias de fallo del neutro</strong><br>
+                        Desequilibrios de carga que provocarían sobretensiones en los receptores conectados a la red, quemando sus aparatos e instalaciones.
+                    </div>
+                </div>
+                
+                <div class="type-grid">
+                    <div class="type-item">
+                        <div class="type-title">🔧 Dispositivos de interrupción permitidos</div>
+                        <div class="element-details">
+                            - Interruptores o seccionadores omnipolares que actúen sobre neutro y fases simultáneamente<br>
+                            - Uniones amovibles en el neutro, próximas a los interruptores de fase
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">📏 Sección mínima del neutro</div>
+                        <div class="element-details">
+                            -2 o 3 conductores: igual a la de los conductores de fase<br>
+                            -4 conductores: mínimo <span class="numero-resaltado">10</span> mm² para cobre y <span class="numero-resaltado">16</span> mm² para aluminio
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">🎨 Identificación del neutro</div>
+                        <div class="element-details">
+                            - Color azul<br>
+                            - Letra "N" marcada<br>
+                            - Posición relativa (debajo o separado de las fases)<br>
+                            - Tamaño (puede ser de sección inferior)
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">🌍 Puesta a tierra del neutro</div>
+                        <div class="element-details">
+                            - Conectado a tierra en la Subestación de alimentación o CT<br>
+                            - Puesto a tierra como mínimo una vez cada <span class="numero-resaltado">500</span> metros de línea<br>
+                            - Preferentemente en puntos desde donde parten derivaciones importantes
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            <!-- Líneas Aéreas BT -->
+        <div class="card full-width">
+            <div class="card-corner"></div>
+            <div class="card-header lineas-aereas">
+                <span>🏗️</span> Líneas Aéreas de BT
+            </div>
+            <div class="card-content">
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div>
+                        <strong>Situación actual</strong><br>
+                        Están siendo sustituidas progresivamente por redes subterráneas (más seguras y menor impacto visual), pero aún se encuentran en centros urbanos y zonas rurales. Reguladas por <span class="numero-resaltado">ITC-BT-06</span>.
+                    </div>
+                </div>
+                
+                <div class="type-grid">
+                    <div class="type-item">
+                        <div class="type-title">🏢 Responsables</div>
+                        <div class="element-details">
+                            Compañías distribuidoras (en Madrid: i-DE de Iberdrola y Unión Fenosa Distribución)
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">🔌 Materiales conductores</div>
+                        <div class="element-details">
+                            Cobre, aluminio u otros materiales/aleaciones con características eléctricas y mecánicas adecuadas
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🔍</div>
+                    <div>
+                        <strong>Tipos de conductores aéreos</strong>
+                    </div>
+                </div>
+                
+                <div class="type-grid">
+                    <div class="type-item">
+                        <div class="type-title">🛡️ Conductores AISLADOS (Preferentes)</div>
+                        <div class="element-details">
+                            - Recubrimiento resistente a la intemperie (<span class="numero-resaltado">UNE 21.030</span>)<br>
+                            - Tensión asignada ≥ <span class="numero-resaltado">0,6</span>/<span class="numero-resaltado">1</span> kV<br>
+                            - Sección mínima: <span class="numero-resaltado">16</span> mm² aluminio, <span class="numero-resaltado">10</span> mm² cobre
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">⚠️ Conductores DESNUDOS (En desuso)</div>
+                        <div class="element-details">
+                            - Uso especial debidamente justificado<br>
+                            - Prohibidos en zonas arboladas o con riesgo de contacto<br>
+                            - Conductores aislados para tensión nominal < <span class="numero-resaltado">0,6</span>/<span class="numero-resaltado">1</span> kV
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🏠</div>
+                    <div>
+                        <strong>Sistemas de montaje de redes aisladas</strong>
+                    </div>
+                </div>
+                
+                <div class="type-grid">
+                    <div class="type-item">
+                        <div class="type-title">📌 Redes POSADAS</div>
+                        <div class="element-details">
+                            - Conductores anclados directamente sobre fachadas o muros<br>
+                            - Altura mínima al suelo: <span class="numero-resaltado">2,5</span> m<br>
+                            - Protección adicional por debajo de <span class="numero-resaltado">2,5</span> m (<span class="numero-resaltado">ITC BT 11</span>)<br>
+                            - Evitar paso por delante de huecos en muros y fachadas
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title">🏗️ Redes TENSADAS</div>
+                        <div class="element-details">
+                            - Tensadas entre piezas especiales sobre apoyos<br>
+                            - Sistemas:<br>
+                            &nbsp;&nbsp;• Con cable portante (neutro en aleación aluminio-acero)<br>
+                            &nbsp;&nbsp;• Con cable fiador (acero galvanizado, resistencia ≥ <span class="numero-resaltado">800</span> daN)
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📐</div>
+                    <div>
+                        <strong>Configuración de conductores desnudos</strong><br>
+                        En BT los conductores desnudos mantienen una configuración <span class="highlight">VERTICAL</span>, mientras que en AT es <span class="highlight">HORIZONTAL</span>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Identificación de Redes BT -->
+        <div class="card full-width">
+            <div class="card-corner"></div>
+            <div class="card-header identificacion">
+                <span>🔍</span> Identificación de Redes de BT
+            </div>
+            <div class="card-content">
+                <div class="feature-item">
+                    <div class="feature-icon">🏢</div>
+                    <div>
+                        <strong>Responsables</strong><br>
+                        Las redes de distribución de BT pertenecen a las compañías suministradoras. En el caso del Ayuntamiento de Madrid: <span class="highlight">i-DE de Iberdrola</span> y <span class="highlight">Unión Fenosa Distribución</span>.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🔌</div>
+                    <div>
+                        <strong>Configuración de conductores</strong><br>
+                        Las redes de distribución actuales tienen 4 conductores (3 fases + neutro). Pueden ser:
+                    </div>
+                </div>
+                
+                <div class="type-grid-Fase">
+                    <div class="type-item">
+                        <div class="type-title"><span class="pulse-dot"></span>Cables unipolares</div>
+                        <div class="element-details">
+                            Cuatro conductores separados en mazo, cada uno con su aislamiento individual
+                        </div>
+                    </div>
+                    
+                    <div class="type-item">
+                        <div class="type-title"><span class="pulse-dot"></span>Cables tetrapolares</div>
+                        <div class="element-details">
+                            Un único cable que contiene los 4 conductores en su interior
+                        </div>
+                    </div>
+                </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <div>
+                            <strong>Identificación por colores</strong><br>
+                            Según el REBT, los colores de identificación son:
+                        </div>
+                    </div>
+                    
+                    <div class="type-grid-Fase">
+                          <div class="type-item">
+                            <div class="type-title">
+                                <span class="color-sample color-red"></span>AT
+                            </div>
+                            <div class="element-details">
+                                3 Color <span class="highlight">rojo</span>
+                            </div>
+                        </div>
+                        <div class="type-item">
+                            <div class="type-title">
+                                <span class="color-sample color-black"></span>Fase 1
+                            </div>
+                            <div class="element-details">
+                                Color <span class="highlight">negro</span>
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">
+                                <span class="color-sample color-brown"></span>Fase 2
+                            </div>
+                            <div class="element-details">
+                                Color <span class="highlight">marrón</span>
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">
+                                <span class="color-sample color-gray"></span>Fase 3
+                            </div>
+                            <div class="element-details">
+                                Color <span class="highlight">gris</span>
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">
+                                <span class="color-sample color-blue"></span>Neutro
+                            </div>
+                            <div class="element-details">
+                                Color <span class="highlight">azul</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <strong>NOTA HISTÓRICA</strong><br>
+                        Antiguamente no existía una legislación unificada, por lo que cada compañía eléctrica usaba sus propios colores de identificación. Aún podemos encontrar redes antiguas identificadas según los criterios de cada compañía.
+                    </div>
+                    
+                </div>
+            </div>
+        
+                    <div class="alinear" class="centrar">
+                        <!-- Separación con Otras Instalaciones -->
+                    <div class="card-2">
+                        <div class="card-corner"></div>
+                        <div class="card-header separacion">
+                            <span>📏</span> Separación Mínima del Suelo
+                        </div>
+                        <div class="card-content">
+                            <div class="feature-item">
+                                <div class="feature-icon">📋</div>
+                                <div>
+                                    <strong>Alturas mínimas sobre el suelo (REBT)</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="type-grid">
+                                <div class="type-item">
+                                    <div class="type-title">🔌 Cables posados</div>
+                                    <div class="element-details"><span class="numero-resaltado">2,5</span> metros</div>
+                                </div>
+                                
+                                <div class="type-item">
+                                    <div class="type-title">🏗️ Cables tensados</div>
+                                    <div class="element-details"><span class="numero-resaltado">4</span> metros</div>
+                                </div>
+                                
+                                <div class="type-item">
+                                    <div class="type-title">⚠️ Conductores desnudos</div>
+                                    <div class="element-details"><span class="numero-resaltado">4</span> metros</div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">🔧</div>
+                                <div>
+                                    <strong>Intervenciones en cables caídos/descolgados</strong><br>
+                                    - La mayoría de la distribución aérea urbana está aislada<br>
+                                    - Solución: recolocar cables en sus soportes con bridas, alambre, etc.<br>
+                                    - Mantener medidas de seguridad y usar maletín de emergencia eléctrica
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+            <!-- Redes Subterráneas BT -->
+                    <div class="card-2">
+                        <div class="card-corner"></div>
+                        <div class="card-header redes-subterraneas">
+                            <span>⛰️</span> Redes Subterráneas BT
+                        </div>
+                        <div class="card-content">
+                            <div class="feature-item">
+                                <div class="feature-icon">📋</div>
+                                <div>
+                                    <strong>Normativa</strong><br>
+                                    Reguladas por <span class="numero-resaltado">ITC-BT-07</span>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">🔌</div>
+                                <div>
+                                    <strong>Características de los cables</strong><br>
+                                    - Conductores de cobre o aluminio<br>
+                                    - Aislados con compuestos poliméricos<br>
+                                    - Tensión asignada no inferior a <span class="numero-resaltado">0,6</span>/<span class="numero-resaltado">1</span> kV<br>
+                                    - Sección mínima: <span class="numero-resaltado">6</span> mm² cobre, <span class="numero-resaltado">16</span> mm² aluminio
+                                </div>
+                            </div>
+                        
+                            <div class="feature-item">
+                                <div class="feature-icon">🏗️</div>
+                                <div>
+                                    <strong>Sistemas de instalación</strong><br>
+                                    - Directamente enterrados<br>
+                                    - Entubadas en canalizaciones<br>
+                                    - En galerías<br>
+                                    - En atarejas o canales revisables<br>
+                                    - En bandejas, soportes, palomillas<br>
+                                    - Directamente sujetos a la pared<br>
+                                    - En circuitos con cables en paralelo
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">🗺️</div>
+                                <div>
+                                    <strong>Trazado</strong><br>
+                                    - Por terrenos de dominio público, preferentemente bajo aceras<br>
+                                    - Lo más rectilíneo posible<br>
+                                    - Paralelo a referencias fijas (líneas de fachada y bordillos)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+                    <!-- Cruzamientos -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header cruzamientos">
+                    <span>🔄</span> Cruzamientos de Cables Subterráneos BT
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">📋</div>
+                        <div>
+                            <strong>Condiciones para cables directamente enterrados</strong><br>
+                            Aplican solo a cables directamente enterrados, no a los dispuestos en galerías, canales, bandejas, etc.
+                        </div>
+                    </div>
+                    
+                    <div class="type-grid">
+                        <div class="type-item">
+                            <div class="type-title">🛣️ Carreteras</div>
+                            <div class="element-details">
+                                - En interior de tubos protectores rígidos de hormigón<br>
+                                - Profundidad mínima: <span class="numero-resaltado">0,80</span> m<br>
+                                - Cruce preferentemente perpendicular
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">🚆 Ferrocarriles</div>
+                            <div class="element-details">
+                                - En interior de tubos protectores rígidos de hormigón<br>
+                                - Profundidad mínima: <span class="numero-resaltado">1,3</span> m respecto a cara inferior de traviesa<br>
+                                - Tubos rebasan vías en <span class="numero-resaltado">1,5</span> m por cada lado
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">⚡ Otros cables energía eléctrica</div>
+                            <div class="element-details">
+                                - Cables BT por encima de AT cuando sea posible<br>
+                                - Distancia mínima: <span class="numero-resaltado">0,25</span> m con AT, <span class="numero-resaltado">0,10</span> m con BT
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">📞 Cables telecomunicaciones</div>
+                            <div class="element-details">
+                                - Separación mínima: <span class="numero-resaltado">0,20</span> m<br>
+                                - No aplica a cables de fibra óptica con cubiertas dieléctricas
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">💧 Canalizaciones agua y gas</div>
+                            <div class="element-details">
+                                - Cables por encima de canalizaciones de agua<br>
+                                - Distancia mínima: <span class="numero-resaltado">0,20</span> m
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">🚽 Alcantarillado</div>
+                            <div class="element-details">
+                                - Pasar cables por encima<br>
+                                - No incidir en interior, sí en pared (con tubos)<br>
+                                - Si no es posible, pasar por debajo en canalizaciones entubadas
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">⛽ Depósitos carburante</div>
+                            <div class="element-details">
+                                - En canalizaciones entubadas<br>
+                                - Distancia mínima: <span class="numero-resaltado">0,20</span> m del depósito<br>
+                                - Tubos rebasan depósito <span class="numero-resaltado">1,5</span> m por cada extremo
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Proximidades y Paralelismos -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header proximidades">
+                    <span>📐</span> Proximidades y Paralelismos
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">📋</div>
+                        <div>
+                            <strong>Condiciones generales</strong><br>
+                            Evitar que queden en el mismo plano vertical que las demás conducciones
+                        </div>
+                    </div>
+                    
+                    <div class="type-grid">
+                        <div class="type-item">
+                            <div class="type-title">⚡ Otros cables energía eléctrica</div>
+                            <div class="element-details">
+                                - Distancia mínima: <span class="numero-resaltado">0,10</span> m con BT, <span class="numero-resaltado">0,25</span> m con AT<br>
+                                - Mismo propietario: puede instalarlos a menor distancia, incluso en contacto
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">📞 Cables telecomunicación</div>
+                            <div class="element-details">
+                                - Distancia mínima: <span class="numero-resaltado">0,20</span> m
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">💧 Canalizaciones agua</div>
+                            <div class="element-details">
+                                - Distancia mínima: <span class="numero-resaltado">0,20</span> m<br>
+                                - Procurar mantener <span class="numero-resaltado">0,20</span> m en p. horizontal<br>
+                                - Canalización de agua por debajo del cable eléctrico<br>
+                                - Arterias principales: distancias > <span class="numero-resaltado">1</span> m
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">🔥 Canalizaciones gas</div>
+                            <div class="element-details">
+                                - Distancia mínima: <span class="numero-resaltado">0,20</span> m (<span class="numero-resaltado">0,40</span> m para alta presión > <span class="numero-resaltado">4</span> bar)<br>
+                                - Procurar mantener <span class="numero-resaltado">0,20</span> m en p. horizontal<br>
+                                - Arterias importantes: distancias > <span class="numero-resaltado">1</span> m
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title">🏠 Acometidas (conexiones servicio)</div>
+                            <div class="element-details">
+                                - En tramo de acometida a edificio: distancia mínima <span class="numero-resaltado">0,20</span> m
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Manual de Bomberos del Ayuntamiento de Madrid - Infraestructuras Eléctricas</p>
+            <p>Basado en el documento "19. Instalaciones Eléctricas-24-27.pdf"</p>
+        </div>
+    </div>
+</body>
+</html>

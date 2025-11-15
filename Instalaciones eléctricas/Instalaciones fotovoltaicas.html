@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalaciones Fotovoltaicas - Manual de Bomberos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "☀️";
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 18px 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .introduccion { background: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%); }
+        .componentes { background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); }
+        .paneles { background: linear-gradient(135deg, #614385 0%, #516395 100%); }
+        .reguladores { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .baterias { background: linear-gradient(135deg, #d31027 0%, #ea384d 100%); }
+        .inversores { background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%); }
+        .precauciones { background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%); }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .feature-item:hover {
+            background: #e9ecef;
+            border-left-color: #2a5298;
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            margin-right: 12px;
+            font-size: 1.4rem;
+            color: #2a5298;
+            min-width: 35px;
+            text-align: center;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .element-list {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+        
+        .element-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            transition: background 0.3s ease;
+        }
+        
+        .element-list li:hover {
+            background: #f8f9fa;
+        }
+        
+        .element-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .element-icon {
+            margin-right: 12px;
+            color: #2a5298;
+            font-size: 1.2rem;
+            margin-top: 3px;
+            min-width: 30px;
+            text-align: center;
+            background: rgba(42, 82, 152, 0.1);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .footer::before {
+            content: "🏢";
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .element-details {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 2px 0;
+        }
+        
+        .numeric-data {
+            color: #e74c3c;
+            font-weight: bold;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #ffeaa7;
+            border-left: 5px solid #fdcb6e;
+            padding: 18px;
+            margin: 18px 0;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .warning-box::before {
+            content: "⚠️";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+        }
+        
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+        
+        .type-item {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .type-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+        }
+        
+        .type-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .type-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .type-title-2 {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }        
+        
+        .card-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 50px 50px 0;
+            border-color: transparent rgba(255,255,255,0.3) transparent transparent;
+            z-index: 1;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .three-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .component-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .component-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .component-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .configuration-diagram {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        /* Estilos del Índice Desplegable */
+.indice-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 1600px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 14px;
+}
+
+.indice-header {
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indice-header:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+}
+
+.indice-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.indice-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.indice-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.indice-links li {
+    border-bottom: 1px solid #eee;
+}
+
+.indice-links li:last-child {
+    border-bottom: none;
+}
+
+.indice-links a {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.indice-links a:hover {
+    background: #f8f9fa;
+    color: #1e3c72;
+    font-weight: bold;
+    transform: translateX(5px);
+}
+
+.indice-container.active .indice-content {
+    max-height: 800px;
+}
+
+.indice-container.active .toggle-icon {
+    transform: rotate(180deg);
+}  
+        
+        .diagram {
+            display: inline-block;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-header {
+                font-size: 1.2rem;
+                padding: 15px 20px;
+            }
+            
+            .feature-item {
+                padding: 12px;
+            }
+            
+            .two-columns, .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .pulse-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+        <!-- Índice Desplegable -->
+<div class="indice-container">
+    <div class="indice-header" id="indiceToggle">
+        <h2>📚 Índice de Contenidos</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="indice-content">
+        <ul class="indice-links">
+            <li><a href="Esquema sistema eléctrico.html">Esquema general</a></li>
+            <li><a href="Centrales Generadoras y Alternadores.html">Centrales Generadoras y Alternadores</a></li>
+            <li><a href="Estaciones y Red.html">Estaciones y Red</a></li>
+            <li><a href="Red de Distribución.html">Red de Distribución</a></li>
+            <li><a href="Líneas AT-Aéreas.html">Líneas AT-Aéreas</a></li>
+            <li><a href="Líneas subterráneas.html">Líneas subterráneas</a></li>
+            <li><a href="Cruzamientos y Aparamenta.html">Cruzamientos y Aparamenta</a></li>
+            <li><a href="Centro Transformador (2).html">Centro Transformador</a></li>
+            <li><a href="BT1.html">Redes Baja Tensión</a></li>
+            <li><a href="Alumbrado.html">💡 Alumbrado Público</a></li>
+            <li><a href="Instalaciones Edificios.html">Instalaciones Edificios</a></li>
+            <li><a href="Instalaciones Enlace.html">Instalaciones de Enlace</a></li>
+            <li><a href="Instalaciones Fotovoltaicas.html">Instalaciones Fotovoltaicas</a></li>
+            <!-- Añade más enlaces según necesites -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const indiceToggle = document.getElementById('indiceToggle');
+        const indiceContainer = document.querySelector('.indice-container');
+        
+        indiceToggle.addEventListener('click', function() {
+            indiceContainer.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (!indiceContainer.contains(event.target)) {
+                indiceContainer.classList.remove('active');
+            }
+        });
+    });
+</script>
+    <div class="container">
+        <header>
+            <h1>Instalaciones Fotovoltaicas</h1>
+            <p class="subtitle">Sistemas de autoconsumo solar según el Manual de Bomberos del Ayuntamiento de Madrid</p>
+        </header>
+        
+        <div class="grid-container">
+            <!-- Introducción -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header introduccion">
+                    <span>🔌</span> Introducción a las Instalaciones Fotovoltaicas (ITC-53)
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">☀️</div>
+                        <div>
+                            <strong>Definición</strong><br>
+                            La energía solar fotovoltaica aprovecha la radiación solar mediante el efecto fotovoltaico o fotoseléctrico, que consiste en la capacidad que tienen determinados materiales de absorber fotones (partículas luminosas) y liberar electrones, generando una corriente eléctrica.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🌱</div>
+                        <div>
+                            <strong>Características</strong><br>
+                            Se trata de un tipo de energía renovable, inagotable y no contaminante que puede producirse en instalaciones que van desde los pequeños generadores para autoconsumo hasta las grandes plantas fotovoltaicas.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🏠</div>
+                        <div>
+                            <strong>Funcionamiento del Autoconsumo</strong><br>
+                            Las instalaciones fotovoltaicas para autoconsumo funcionan como una pequeña central de producción eléctrica que da servicio a una vivienda. La electricidad generada es consumida por el productor (usuario) y la energía sobrante se vierte a la red.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <div>
+                            <strong>Bidireccionalidad</strong><br>
+                            Cuando la unidad no es capaz de suministrar suficiente electricidad, el productor toma de la red la energía necesaria para cubrir su demanda. Por lo tanto, las viviendas con instalaciones fotovoltaicas también contarán con su acometida eléctrica convencional.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div>
+                            <strong>Rangos de Potencia</strong><br>
+                            Los rangos de potencia para este tipo de instalaciones están entre <span class="numeric-data">1,5 KW</span> y <span class="numeric-data">100 KW</span>, pudiendo ser instalados en cualquier espacio exterior (tejados, terrazas, suelos, etc.).
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Componentes Básicos -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header componentes">
+                    <span>🧩</span> Componentes Básicos de un Sistema Fotovoltaico
+                </div>
+                <div class="card-content">
+                    <div class="component-grid" style="display: flex; gap: 20px; justify-content: center; flex: 1;">
+                        <div class="component-item">
+                            <span class="component-icon">☀️</span>
+                            <div class="type-title-2">Paneles Fotovoltaicos</div>
+                            <div class="element-details">
+                                Transforman la radiación solar en energía eléctrica mediante células de silicio
+                            </div>
+                        </div>
+                        
+                        <div class="component-item">
+                            <span class="component-icon">⚡</span>
+                            <div class="type-title-2">Regulador de Carga</div>
+                            <div class="element-details">
+                                Controla la carga y descarga de las baterías, protegiéndolas de sobrecargas
+                            </div>
+                        </div>
+                        
+                        <div class="component-item">
+                            <span class="component-icon">🔋</span>
+                            <div class="type-title-2">Acumulador (Baterías)</div>
+                            <div class="element-details">
+                                Almacenan la energía para su uso cuando no hay radiación solar
+                            </div>
+                        </div>
+                        
+                        <div class="component-item">
+                            <span class="component-icon">🔄</span>
+                            <div class="type-title-2">Inversor de Corriente</div>
+                            <div class="element-details">
+                                Convierte la corriente continua (DC) en corriente alterna (AC)
+                            </div>
+                        </div>
+                        
+                        <div class="component-item">
+                            <span class="component-icon">📊</span>
+                            <div class="type-title-2">Contador Bidireccional</div>
+                            <div class="element-details">
+                                Mide la energía que fluye en ambos sentidos: de la red al usuario y viceversa
+                            </div>
+                        </div>
+                        
+                        <div class="component-item">
+                            <span class="component-icon">🛡️</span>
+                            <div class="type-title-2">Protecciones Eléctricas</div>
+                            <div class="element-details">
+                                Fusibles y dispositivos de seguridad para proteger la instalación
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="configuration-diagram">
+                    <img src="images/C fotovoltaico.png" alt="" style="max-width: 50%; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
+                    <img src="images/Fotovoltaico.png" alt="" style="max-width: 30%; margin-left: auto; margin-right: auto;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Paneles Fotovoltaicos -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header paneles">
+                    <span>☀️</span> Paneles Fotovoltaicos - Tipos y Características
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔬</div>
+                        <div>
+                            <strong>Composición</strong><br>
+                            Los paneles fotovoltaicos están formados por un conjunto de pequeños elementos rectangulares conocidos como células solares, protegidos de las condiciones meteorológicas por una lámina de EVA. Estas células, fabricadas fundamentalmente con silicio, absorben la luz solar convirtiéndola en corriente continua (DC).
+                        </div>
+                    </div>
+                    
+                    <div class="type-grid">
+                        <div class="type-item">
+                            <div class="type-title"><span class="pulse-dot"></span>Panel Monocristalino</div>
+                            <div class="element-details">
+                                • Aspecto uniforme con coloración oscura<br>
+                                • Alta pureza en silicio<br>
+                                • Celdas con forma octogonal<br>
+                                • Mayor eficiencia<br>
+                                • Vida útil superior a <span class="numeric-data">30 años</span>
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title"><span class="pulse-dot"></span>Panel Policristalino</div>
+                            <div class="element-details">
+                                • Método de fabricación diferente<br>
+                                • Silicio fundido en moldes cuadrados<br>
+                                • Celdas perfectamente cuadradas<br>
+                                • Aprovecha totalidad de la superficie<br>
+                                • Menor eficiencia que monocristalino
+                            </div>
+                        </div>
+                        
+                        <div class="type-item">
+                            <div class="type-title"><span class="pulse-dot"></span>Capa Fina (Amorfos)</div>
+                            <div class="element-details">
+                                • Depósito de capas de material fotovoltaico<br>
+                                • No solo de silicio, también teluro de cadmio, etc.<br>
+                                • Apariencia homogénea<br>
+                                • Flexibles, adaptables a cualquier superficie<br>
+                                • Ideales para pequeñas aplicaciones
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item" style="margin-top: 18px;">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Tensiones de Salida y Conexiones</strong><br>
+                            En el mercado encontramos paneles de <span class="numeric-data">12V</span>, <span class="numeric-data">24V</span> y <span class="numeric-data">48V</span>. Se pueden conectar en:
+                            <br><br>
+                            • <span class="highlight">Serie</span>: Incrementa la tensión<br>
+                            • <span class="highlight">Paralelo</span>: Incrementa la intensidad<br>
+                            • <span class="highlight">Mixta</span>: Aumenta tanto tensión como intensidad
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🏗️</div>
+                        <div>
+                            <strong>Sistemas de Anclaje en Cubierta</strong><br>
+                            Se basan en una estructura de perfiles metálicos que soportan los paneles solares gracias a abrazaderas, anclados a la cubierta con soportes coplanares aluminados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reguladores de Carga -->
+            <div class="card">
+                <div class="card-corner"></div>
+                <div class="card-header reguladores">
+                    <span>⚡</span> Reguladores de Carga
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔋</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Controla la carga y descarga de las baterías, instalado entre los paneles solares y la batería. Protege las baterías contra sobrecargas y evita descargas profundas.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div>
+                            <strong>Voltajes de Trabajo</strong><br>
+                            Los paneles solares suelen trabajar a <span class="numeric-data">12V DC</span> o <span class="numeric-data">24V DC</span>. El regulador controla la entrada de energía dependiendo del estado de las baterías.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Tipos de Reguladores</strong><br>
+                            • <span class="highlight">MPPT</span> (Maximum Power Point Tracker): Adapta la tensión del panel a la necesaria para la batería, buscando la máxima potencia<br>
+                            • <span class="highlight">PWM</span>: Actúan como interruptores entre placa y batería, forzando a trabajar a la tensión de la batería
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Baterías -->
+            <div class="card">
+                <div class="card-corner"></div>
+                <div class="card-header baterias">
+                    <span>🔋</span> Baterías y Acumuladores
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">💡</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Permiten almacenar la energía producida por las placas solares para utilizarla durante la noche o en días nublados.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Tensiones y Conexiones</strong><br>
+                            Las baterías más usadas son de <span class="numeric-data">12V DC</span> y <span class="numeric-data">24V DC</span>. En instalaciones grandes pueden ser de <span class="numeric-data">48V DC</span>. Se pueden conectar en serie, paralelo o mixta.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Tipos de Baterías</strong><br>
+                            • <span class="highlight">AGM</span>: Para pequeñas instalaciones, sin mantenimiento<br>
+                            • <span class="highlight">Litio</span>: Ligeras, compactas, rápidos tiempos de carga<br>
+                            • <span class="highlight">Monoblock</span>: Las más habituales (coches, motos)
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <div>
+                            <strong>Desconectador de Batería</strong><br>
+                            Permite manualmente cortar la conexión de las baterías cuando se desee o el sistema lo requiera.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Inversores de Corriente -->
+            <div class="card">
+                <div class="card-corner"></div>
+                <div class="card-header inversores">
+                    <span>🔄</span> Inversores de Corriente
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Función</strong><br>
+                            Transforman la corriente continua (DC) generada por la instalación solar en corriente alterna (AC) para uso doméstico.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div>
+                            <strong>Tipos de Inversores</strong><br>
+                            • <span class="highlight">Monofásico</span>: Genera una sola fase de voltaje (230V)<br>
+                            • <span class="highlight">Trifásico</span>: Genera tres fases de voltaje (400V)
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div>
+                            <strong>Especificaciones Técnicas</strong><br>
+                            Voltaje de entrada: <span class="numeric-data">12V DC</span> o <span class="numeric-data">24V DC</span><br>
+                            Voltaje de salida: <span class="numeric-data">400/230V AC</span><br>
+                            Frecuencia: <span class="numeric-data">50 Hz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Precauciones para Bomberos -->
+            <div class="card full-width">
+                <div class="card-corner"></div>
+                <div class="card-header precauciones">
+                    <span>⚠️</span> Precauciones para Intervenciones de Bomberos
+                </div>
+                <div class="card-content">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <div>
+                            <strong>CPM Especial en Instalaciones Fotovoltaicas</strong><br>
+                            En las viviendas con instalaciones fotovoltaicas encontraremos un CPM especial con contador bidireccional que cuenta con dos entradas y dos salidas. Mide la energía que fluye en ambos sentidos.
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <strong>PRECAUCIÓN CRÍTICA - RIESGO DE RETORNO DE ENERGÍA</strong><br>
+                        Se debe tener especial precaución al realizar el control de suministro en este CPM. Al retirar los fusibles de entrada podemos pensar que hemos seccionado los circuitos, pero la instalación fotovoltaica puede ponerse en servicio para asegurar el suministro, electrificando de nuevo toda la vivienda y generando un riesgo eléctrico.
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div>
+                            <strong>Función de los Inversores como Protección</strong><br>
+                            Para prevenir riesgos por estos retornos existen los inversores, un elemento que detecta que el seccionamiento se ha realizado en la CPM y detiene el proceso de invertir corriente a la red.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🚨</div>
+                        <div>
+                            <strong>Protocolo de Intervención</strong><br>
+                            1. Identificar la instalación fotovoltaica (paneles visibles, CPM especial)<br>
+                            2. Localizar y accionar el desconectador de baterías si existe<br>
+                            3. Verificar el corte en el inversor (debe detectar la falta de red)<br>
+                            4. Confirmar ausencia de tensión en todos los circuitos antes de intervenir
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📝</div>
+                        <div>
+                            <strong>Consideraciones Adicionales</strong><br>
+                            • Las instalaciones fotovoltaicas generan tensión mientras haya luz solar, incluso con la red cortada<br>
+                            • Los paneles siguen produciendo energía en días nublados<br>
+                            • Las baterías mantienen carga incluso con el sistema apagado<br>
+                            • Identificar todos los componentes antes de cualquier intervención
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Manual de Bomberos del Ayuntamiento de Madrid - Instalaciones Fotovoltaicas</p>
+            <p>Basado en el documento "19. Instalaciones Eléctricas-45-47.pdf"</p>
+        </div>
+    </div>
+</body>
+</html>
