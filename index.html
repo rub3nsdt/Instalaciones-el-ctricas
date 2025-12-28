@@ -394,7 +394,20 @@
         </div>
 
         <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-            <img src="images/Esquema.png" alt="Diagrama de conexión en estrella" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <img src="images/Esquema.png"
+                usemap="#image-map"
+                style="max-width:100%; height:auto;">
+
+            <map name="image-map">
+                <area target="" alt="Generación" title="Generación" href="Centrales Generadoras y Alternadores.html" coords="478,578,13,0" shape="rect">
+                <area target="" alt="Transporte" title="Transporte" href="Estaciones y Red.html" coords="490,0,1037,568" shape="rect">
+                <area target="" alt="Aéreas" title="Aéreas" href="Líneas AT-Aéreas.html" coords="1229,295,106" shape="circle">
+                <area target="" alt="Subterráneas" title="Subterráneas" href="Líneas subterráneas.html" coords="1395,346,62" shape="circle">
+                <area target="" alt="Distribución" title="Distribución" href="Red de Distribución.html" coords="1044,0,1867,582" shape="rect">
+                <area target="" alt="Transformador" title="Transformador" href="Centro Transformador (2).html" coords="1879,225,2009,389" shape="rect">
+                <area target="" alt="BT" title="BT" href="BT1.html" coords="1875,0,2293,582" shape="rect">
+                
+            </map>
         </div>
         
         <table class="system-table">
@@ -551,5 +564,10 @@
             <p><i class="fas fa-lightbulb"></i> Sistema Eléctrico - Tabla corregida según documento original</p>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
+<script>
+    imageMapResize();
+</script>
 </body>
 </html>
