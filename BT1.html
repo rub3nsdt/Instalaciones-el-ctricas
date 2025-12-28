@@ -653,6 +653,22 @@
             margin-top: 5px;
             color: #666;
         }
+
+        @media (max-width: 768px) {
+            /* ... otros estilos existentes ... */
+            
+            .alinear {
+                flex-direction: column; /* Apila verticalmente */
+                align-items: center; /* Centra las tarjetas */
+                gap: 25px; /* Espacio entre tarjetas apiladas */
+            }
+
+            .card-2 {
+                flex: 1 1 100%; /* Ocupa el 100% del ancho disponible */
+                max-width: 100%; /* Sin límite máximo */
+                width: 100%; /* Asegura que ocupe todo el ancho */
+            }
+        }
         
         @media (max-width: 768px) {
             .grid-container {
